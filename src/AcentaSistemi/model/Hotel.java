@@ -19,6 +19,7 @@ public class Hotel {
     private String hotel_features;
     private String hotel_board;
     private Connection connection;
+
     //Hotel'deki Constructorlarımız
     public Hotel(int hotel_id, String hotel_name, String hotel_address, String hotel_city, String hotel_region, String hotel_mail, String hotel_tel, String hotel_stars, String hotel_features, String hotel_board) {
         this.hotel_id = hotel_id;
@@ -49,7 +50,9 @@ public class Hotel {
 
     }
 
-//Oluşturulan ya da oluşturulmuş Hoteller getirlmek istendigin de çagrılması gereken Hotel ArrayListi
+
+
+    //Oluşturulan ya da oluşturulmuş Hoteller getirlmek istendigin de çagrılması gereken Hotel ArrayListi
     public static ArrayList<Hotel> getList () {
         ArrayList <Hotel> courseArrayList = new ArrayList<>();
         Hotel course;
@@ -110,6 +113,35 @@ public class Hotel {
         }
         return obj;
     }
+    /* public static Hotel getFetch(String hotel_name){
+        Hotel obj = null;
+        String query = "SELECT * FROM hotel WHERE hotel_name =?";
+        try{
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setString(1,hotel_name);
+            ResultSet rs = pr.executeQuery();
+            while(rs.next()) {
+                obj = new Hotel();
+                obj.setHotel_id(rs.getInt("hotel_id"));
+                obj.setHotel_name(rs.getString("hotel_name"));
+                obj.setHotel_address(rs.getString("hotel_address"));
+                obj.setHotel_city(rs.getString("hotel_city"));
+                obj.setHotel_region(rs.getString("hotel_region"));
+                obj.setHotel_mail(rs.getString("hotel_mail"));
+                obj.setHotel_tel(rs.getString("hotel_tel"));
+                obj.setHotel_stars(rs.getString("hotel_stars"));
+                obj.setHotel_features(rs.getString("hotel_features"));
+                obj.setHotel_board(rs.getString("hotel_board"));
+
+            }
+
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+        return obj.getHotel_name();
+    }
+
+     */
     //Arama Kısmında Hotelleri Listeleyecek ArrayList Metodu
 
 
@@ -205,11 +237,12 @@ public class Hotel {
         return true;
     }
     public static String searchQuery(String name, String city, String region, String star){
-        String query = "SELECT * FROM hotel WHERE name LIKE '%{{name}}%' AND city LIKE '%{{city}}%' AND region LIKE '%{{region}}%' AND star LIKE '%{{star}}%'";
-        query = query.replace("{{name}}" ,name);
-        query = query.replace("{{city}}" ,city);
-        query = query.replace("{{region}}" ,region);
-        query = query.replace("{{star}}" ,star);
+        String query = "SELECT * FROM hotel WHERE hotel_name LIKE '%{{hotel_name}}%' AND hotel_city LIKE '%{{hotel_city}}%'" +
+                " AND hotel_region LIKE '%{{hotel_region}}%' AND hotel_stars LIKE '%{{hotel_stars}}%'";
+        query = query.replace("{{hotel_name}}" ,name);
+        query = query.replace("{{hotel_city}}" ,city);
+        query = query.replace("{{hotel_region}}" ,region);
+        query = query.replace("{{hotel_stars}}" ,star);
         System.out.println(query);
         return query;
     }
@@ -225,6 +258,9 @@ public class Hotel {
                 obj.setHotel_id(rs.getInt("hotel_id"));
                 obj.setHotel_name(rs.getString("hotel_name"));
                 obj.setHotel_address(rs.getString("hotel_address"));
+                obj.setHotel_region(rs.getString("hotel_region"));
+                obj.setHotel_city(rs.getString("hotel_city"));
+                obj.setHotel_mail(rs.getString("hotel_mail"));
                 obj.setHotel_tel(rs.getString("hotel_tel"));
                 obj.setHotel_stars(rs.getString("hotel_stars"));
                 obj.setHotel_features(rs.getString("hotel_features"));
@@ -237,6 +273,64 @@ public class Hotel {
         }
         return hotelList;
     }
+    public static ArrayList<Hotel> getlistByid(int hotelId){
+        ArrayList<Hotel> hotelList = new ArrayList<>();
+        String query = "SELECT * FROM hotel WHERE hotel_id =? ";
+        Hotel obj;
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setInt(1,hotelId);
+            ResultSet rs = pr.executeQuery();
+            while (rs.next()){
+                int hotel_id = rs.getInt("hotel_id");
+                String hotel_name = rs.getString("hotel_name");
+                String hotel_address = rs.getString("hotel_address");
+                String hotel_region = rs.getString("hotel_region");
+                String hotel_city = rs.getString("hotel_city");
+                String hotel_mail = rs.getString("hotel_mail");
+                String hotel_tel = rs.getString("hotel_tel");
+                String hotel_stars = rs.getString("hotel_stars");
+                String hotel_features = rs.getString("hotel_features");
+                String hotel_board = rs.getString("hotel_board");
+                obj = new Hotel(hotel_id, hotel_name,hotel_address,hotel_region,hotel_city,hotel_mail,hotel_tel,hotel_stars,hotel_features,hotel_board);
+                hotelList.add(obj);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return hotelList;
+    }
+
+    public static Hotel getByID ( int id) {
+
+        Hotel object =null ;
+        String query = "SELECT * FROM hotel WHERE hotel_id = ?";
+        try {
+            PreparedStatement statement = DBConnector.getInstance().prepareStatement(query);
+            statement.setInt(1,id);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                object = new Hotel ();
+                object.setHotel_id(result.getInt("hotel_id"));
+                object.setHotel_name(result.getString("hotel_name"));
+                object.setHotel_address(result.getString("hotel_address"));
+                object.setHotel_city(result.getString("hotel_city"));
+                object.setHotel_region(result.getString("hotel_region"));
+                object.setHotel_mail(result.getString("hotel_mail"));
+                object.setHotel_tel(result.getString("hotel_tel"));
+                object.setHotel_stars(result.getString("hotel_stars"));
+                object.setHotel_features(result.getString("hotel_features"));
+                object.setHotel_board(result.getString("hotel_board"));
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return object;
+    }
+
 
     //Oluşturulan Otelleri silme Kısmı
     public static boolean delete(int hotel_id) {
@@ -251,6 +345,7 @@ public class Hotel {
         return true;
     }
 
+
     public int getHotel_id() {
         return hotel_id;
     }
@@ -260,8 +355,10 @@ public class Hotel {
     }
 
     public String getHotel_name() {
+
         return hotel_name;
     }
+
 
     public void setHotel_name(String hotel_name) {
         this.hotel_name = hotel_name;

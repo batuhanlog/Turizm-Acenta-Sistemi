@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 //Reservasyonların yapılacagı metot
@@ -17,31 +18,44 @@ public class Reservation {
     private String client_email;
     private String client_note;
     private int room_id;
-    private String check_in;
-    private String check_out;
-    private int adult_numb;
-    private int child_numb;
     private int total_price;
     private int hotel_id;
     private Hotel hotel;
     private Room room;
+private LocalDate startDate;
+private LocalDate endDate;
+private int day;
 
     public Reservation(){
 
     }
     //Rezervasyon için gereken Constructorlar
     public Reservation(int id, String client_name, String client_phone, String client_email,
-                       String client_note,int room_id,String check_in,String check_out,int adult_numb,int child_numb, int total_price,int hotel_id) {
+                       String client_note,int day,LocalDate startDate,LocalDate endDate,int room_id, int total_price,int hotel_id) {
         this.id = id;
         this.client_name = client_name;
         this.client_phone = client_phone;
         this.client_email = client_email;
         this.client_note = client_note;
+        this.day=day;
+        this.startDate=startDate;
+        this.endDate=endDate;
         this.room_id = room_id;
-        this.check_in = check_in;
-        this.check_out=check_out;
-        this.adult_numb=adult_numb;
-        this.child_numb=child_numb;
+        this.total_price = total_price;
+        this.hotel_id = hotel_id;
+        this.hotel = Hotel.getFetch(hotel_id);
+        this.room = Room.getFetch(room_id);
+    }
+    public Reservation(String client_name, String client_phone, String client_email,
+                       String client_note,int day,LocalDate startDate,LocalDate endDate,int room_id, int total_price,int hotel_id) {
+        this.client_name = client_name;
+        this.client_phone = client_phone;
+        this.client_email = client_email;
+        this.client_note = client_note;
+        this.day=day;
+        this.startDate=startDate;
+        this.endDate=endDate;
+        this.room_id = room_id;
         this.total_price = total_price;
         this.hotel_id = hotel_id;
         this.hotel = Hotel.getFetch(hotel_id);
@@ -60,20 +74,50 @@ public class Reservation {
                 String client_phone = rs.getString("client_phone");
                 String client_email = rs.getString("client_email");
                 String client_note = rs.getString("client_note");
+                int day = rs.getInt("day");
+                LocalDate start= LocalDate.parse(rs.getString("reservation_start"));
+                LocalDate end = LocalDate.parse(rs.getString("reservation_end"));
                 int room_id = rs.getInt("room_id");
-                String check_in = rs.getString("check_in");
-                String check_out = rs.getString("check_out");
-                int adult_numb = rs.getInt("adult_numb");
-                int child_numb = rs.getInt("child_numb");
                 int total_price = rs.getInt("total_price");
                 int hotel_id = rs.getInt("hotel_id");
-                obj = new Reservation(id,client_name,client_phone,client_email,client_note,room_id,check_in,check_out,adult_numb,child_numb,total_price,hotel_id);
+                obj = new Reservation(id,client_name,client_phone,client_email,
+                        client_note, day,start,end,room_id,total_price,hotel_id);
                 reservationList.add(obj);
+
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return reservationList;
+    }
+
+    public static boolean add(String client_name, String client_phone, String client_email,
+                              String client_note, int day,LocalDate startDate,LocalDate endDate,int room_id ,int total_price,int hotel_id) {
+        String query = "INSERT INTO reservation (client_name,client_phone,client_email,client_note, day, reservation_start, " +
+                "reservation_end, room_id, total_price, hotel_id)" +
+                " VALUES (?,?,?,?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setString(1,client_name);
+            pr.setString(2,client_phone);
+            pr.setString(3,client_email);
+            pr.setString(4,client_note);
+            pr.setInt(5,day);
+            pr.setDate(6,java.sql.Date.valueOf(startDate));
+            pr.setDate(7, java.sql.Date.valueOf(endDate));
+            pr.setInt(9,room_id);
+            pr.setInt(8,total_price);
+            pr.setInt(10,hotel_id);
+
+            int responce = pr.executeUpdate();
+            if(responce == -1){
+                Helper.showMsg("error");
+            }
+            return responce != -1;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return true;
     }
     //Oluşturulan Rezervasyonu Silmek için Metot
     public static boolean delete(int id) {
@@ -84,6 +128,30 @@ public class Reservation {
             return pr.executeUpdate() != -1;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        }
+        return true;
+    }
+    public boolean save (Reservation reservation ){
+        String query = "INSERT INTO reservation (client_name, client_phone, client_email, " +
+                " client_note,room_id, total_price, hotel_id)" +
+                " VALUES (?,?,?,?,?,?,?)";
+
+        try {
+            PreparedStatement statement = DBConnector.getInstance().prepareStatement(query);
+            statement.setString(1, reservation.getClient_name());
+            statement.setString(2, reservation.getClient_phone());
+            statement.setString(3, reservation.getClient_email());
+            statement.setString(4, reservation.getClient_note());
+
+
+
+
+
+            return statement.executeUpdate() != -1;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
         }
         return true;
     }
@@ -136,37 +204,6 @@ public class Reservation {
         this.room_id = room_id;
     }
 
-    public String getCheck_in() {
-        return check_in;
-    }
-
-    public void setCheck_in(String check_in) {
-        this.check_in = check_in;
-    }
-
-    public String getCheck_out() {
-        return check_out;
-    }
-
-    public void setCheck_out(String check_out) {
-        this.check_out = check_out;
-    }
-
-    public int getAdult_numb() {
-        return adult_numb;
-    }
-
-    public void setAdult_numb(int adult_numb) {
-        this.adult_numb = adult_numb;
-    }
-
-    public int getChild_numb() {
-        return child_numb;
-    }
-
-    public void setChild_numb(int child_numb) {
-        this.child_numb = child_numb;
-    }
 
     public int getTotal_price() {
         return total_price;

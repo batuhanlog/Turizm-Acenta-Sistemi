@@ -3,10 +3,7 @@ package AcentaSistemi.view;
 
 import AcentaSistemi.helper.DBConnector;
 import AcentaSistemi.helper.Helper;
-import AcentaSistemi.model.Hotel;
-import AcentaSistemi.model.Reservation;
-import AcentaSistemi.model.Room;
-import AcentaSistemi.model.User;
+import AcentaSistemi.model.*;
 import AcentaSistemi.helper.Config;
 
 import javax.swing.*;
@@ -53,13 +50,6 @@ public class EmployeeGUI extends JFrame {
     private JButton btn_exit;
     private JTable tbl_room_list;
     private JTextField fld_room_city;
-    private JTextField fld_;
-    private JComboBox comboBox1;
-    private JComboBox comboBox2;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
-    private JButton ekleButton;
     private JButton btn_room_search;
     private JTable tbl_reservation_list;
     private JButton btn_refresh;
@@ -73,11 +63,27 @@ public class EmployeeGUI extends JFrame {
     private JTextField fld_sh_hotel_region;
     private JButton btn_hotel_sh;
     private JTextField fld_sh_hotel_star;
+    private JButton btn_room_searc;
+    private JTextField fld_room_hotel;
+    private JTextField fld_room_hotel_stars;
+    private JTextField fld_room_hotel_city;
+    private JButton odaSilButton;
+    private JButton btn_hotel_features;
+    private JButton btn_hotel_room_add;
+    private JButton btn_room_features;
     private JButton btn_room_deletee;
     private User user;
     private Hotel hotel;
     private final Connection connection;
-    
+
+    private static int selected_roomId;
+
+    private int room_hotel_id_add;
+    private static String selectedSeasonName ;
+    private static String selectedHostelType;
+    private static int selectedAdultPrice;
+    private static int selectedChildPrice;
+    private Room room;
     private Object[] row_room_list;
 
     private DefaultTableModel mdl_hotel_list = new DefaultTableModel();
@@ -88,9 +94,10 @@ public class EmployeeGUI extends JFrame {
 
         //Employee Sınıfının Veritabanı baglantısı ve arayüz için gerekli olan kodların yazıldıgı kısım
         this.hotel=new Hotel();
+        this.room=new Room();
         this.connection= DBConnector.getInstance();
         this.add(wrapper);
-        this.startGUI(900, 700);
+        this.startGUI(900, 950);
         setLocation(Helper.screenCenterPoint("x",getSize()), Helper.screenCenterPoint("y",getSize()));
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle(Config.PROJECT_TITLE);
@@ -132,7 +139,7 @@ public class EmployeeGUI extends JFrame {
         });
         //**************Model Room List Start*******************
         mdl_room_list = new DefaultTableModel();
-        Object[] col_roomList = {"ID","Pansiyon Tipi","Stok","Dönem","Yetişkin Fiyat","Çocuk Ücreti","Hotel özellik","Otel Adı"};
+        Object[] col_roomList = {"ID","Oda Adı","Stok","Dönem","Yetişkin Fiyat","Çocuk Ücreti","Pansiyon Tipi","Otel Adı"};
         mdl_room_list.setColumnIdentifiers(col_roomList);
         row_room_list = new Object[col_roomList.length];
         loadRoomList();
@@ -143,6 +150,10 @@ public class EmployeeGUI extends JFrame {
         tbl_room_list.getSelectionModel().addListSelectionListener(e -> {
             try{
                 String selected_room_id = tbl_room_list.getValueAt(tbl_room_list.getSelectedRow(),0).toString();
+                selectedSeasonName = tbl_room_list.getValueAt(tbl_room_list.getSelectedRow(),3).toString();
+                selectedHostelType = tbl_room_list.getValueAt(tbl_room_list.getSelectedRow(),1).toString();
+                selectedAdultPrice = (int) tbl_room_list.getValueAt(tbl_room_list.getSelectedRow(),4);
+                selectedChildPrice = (int) tbl_room_list.getValueAt(tbl_room_list.getSelectedRow(),5);
                 selected_hotelId = Integer.parseInt(selected_room_id);
                 fld_room_id.setText(selected_room_id);
 
@@ -152,7 +163,7 @@ public class EmployeeGUI extends JFrame {
 
         mdl_hotel_list = new DefaultTableModel();
         //Eklenmiş otelin özelliklerinin bulundugu kısım
-        Object[] col_hotel_list = {"ID", "Otel İsmi","Şehir","Yıldız","Telefon","Mail"};
+        Object[] col_hotel_list = {"ID", "Otel İsmi","Şehir","Bölge","Yıldız","Telefon","Mail"};
         mdl_hotel_list.setColumnIdentifiers(col_hotel_list);
         row_hotel_list = new Object[col_hotel_list.length];
         loadHotelList();
@@ -195,7 +206,7 @@ public class EmployeeGUI extends JFrame {
         });
         mdl_reservation_list = new DefaultTableModel();
         //Rezervasyon ekranında yazılmasını istedigimiz kısımların oluşturuldugu yer
-        Object[] col_reservationList = {"ID","Müşteri Adı","Telefon Numarası","E-mail","Müşteri Notu","Oda Adı","Giriş Tarihi","Çıkış Tarihi","Yetişkin Fiyatı","Çocuk Fiyatı","Toplam Fiyatı","Hotel Adı"};
+        Object[] col_reservationList = {"ID","Müşteri Adı","Telefon Numarası","E-mail","Müşteri Notu","Oda Adı","Toplam Fiyatı","Hotel Adı"};
         mdl_reservation_list.setColumnIdentifiers(col_reservationList);
         row_reservation_list = new Object[col_reservationList.length];
         loadReservationList();
@@ -269,7 +280,8 @@ public class EmployeeGUI extends JFrame {
           if(Helper.isFieldEmpty(fld_room_id)){
               Helper.showMsg("error");
           } else{
-              ReservationGUI res = new ReservationGUI();
+              int id = Integer.parseInt(fld_room_id.getText());
+              ReservationGUI reservationGUI = new ReservationGUI(room.getByID(id));
           }
         });
         btn_hotel_sh.addActionListener(e -> {
@@ -281,6 +293,48 @@ public class EmployeeGUI extends JFrame {
             ArrayList<Hotel> searchingHotel = Hotel.search_hotel(query);
             loadHotelModel(searchingHotel);
         });
+        btn_hotel_features.addActionListener(e -> {
+            if (Helper.isFieldEmpty(fld_hotel_id)){
+                Helper.showMsg("fill");
+            }else{
+                AddBoardSeasonGUI features = new AddBoardSeasonGUI(hotel);
+            }
+
+        });
+        btn_hotel_room_add.addActionListener(e -> {
+            if(Helper.isFieldEmpty(fld_hotel_id)){
+                Helper.showMsg("error");
+            }else{
+                RoomaddGUI rm = new RoomaddGUI();
+                loadRoomModel();
+                loadRoomList();
+            }
+        });
+        btn_room_features.addActionListener(e -> {
+            if(Helper.isFieldEmpty(fld_room_id)){
+                Helper.showMsg("fill");
+                System.out.println("hata");
+            }else{
+                int x = Integer.parseInt(fld_room_id.getText().toString());
+                Room roomfeatures = Room.getById(x);
+                AddRoomFeaturesGUI features = new AddRoomFeaturesGUI(roomfeatures);
+            }
+        });
+        fld_room_hotel.addActionListener(e -> {
+
+        });
+        btn_room_searc.addActionListener(e -> {
+            String hotel_name = fld_room_hotel.getText();
+            String hotel_city = fld_room_hotel_city.getText();
+            String hotel_region = fld_room_hotel_city.getText();
+            String hotel_stars = fld_room_hotel_stars.getText();
+            String query = Room.searchQuery(hotel_name,hotel_city,hotel_region,hotel_stars);
+            ArrayList<Room> loadroom = Room.search_room(query);
+            loadRoomModel(loadroom);
+        });
+        fld_room_hotel_stars.addActionListener(e -> {
+
+        });
     }
     public void loadHotelModel(ArrayList<Hotel> list){
         DefaultTableModel clearModel = (DefaultTableModel) tbl_hotel_list.getModel();
@@ -291,15 +345,37 @@ public class EmployeeGUI extends JFrame {
             row_hotel_list[i++] = obj.getHotel_name();
             row_hotel_list[i++] = obj.getHotel_city();
             row_hotel_list[i++] = obj.getHotel_region();
-            row_hotel_list[i++] = obj.getHotel_address();
-            row_hotel_list[i++] = obj.getHotel_mail();
-            row_hotel_list[i++] = obj.getHotel_tel();
             row_hotel_list[i++] = obj.getHotel_stars();
+            row_hotel_list[i++] = obj.getHotel_tel();
+            row_hotel_list[i++] = obj.getHotel_mail();
+            //row_hotel_list[i++] = obj.getHotel_address();
             mdl_hotel_list.addRow(row_hotel_list);
         }
     }
 
 
+
+    public void loadRoomModel(ArrayList<Room> list){
+        DefaultTableModel clearModel = (DefaultTableModel) tbl_room_list.getModel();
+        clearModel.setRowCount(0);
+        for (Room obj : list) {
+            int i = 0;
+            row_room_list[i++] = obj.getId();
+            row_room_list[i++] = obj.getRoom_type();
+            row_room_list[i++] = obj.getStock();
+            int y = obj.getSeason_id();
+            HotelSeason object = HotelSeason.getByID(y);
+            row_room_list[i++] = object.getName();
+            row_room_list[i++] = obj.getAdult_price();
+            row_room_list[i++] = obj.getChild_price();
+            row_room_list[i++] = obj.getType_hotel_id();
+            int x = obj.getHotel_id();
+            Hotel hotelobj = Hotel.getByID(x);
+            row_room_list[i++] = hotelobj.getHotel_name();
+            //row_hotel_list[i++] = obj.getHotel_address();
+            mdl_room_list.addRow(row_room_list);
+        }
+    }
     //Oda modellerimiz
     private void loadRoomModel() {
         DefaultTableModel clearModel = (DefaultTableModel) tbl_room_list.getModel();
@@ -309,7 +385,9 @@ public class EmployeeGUI extends JFrame {
             row_room_list[i++] = obj.getId();
             row_room_list[i++] = obj.getRoom_type();
             row_room_list[i++] = obj.getStock();
-            row_room_list[i++] = obj.getSeason_id();
+            int y = obj.getSeason_id();
+            HotelSeason object = HotelSeason.getByID(y);
+            row_room_list[i++] = object.getName();
             row_room_list[i++] = obj.getAdult_price();
             row_room_list[i++] = obj.getChild_price();
             row_room_list[i++] = obj.getType_hotel_id();
@@ -331,10 +409,6 @@ public class EmployeeGUI extends JFrame {
             row_reservation_list[i++] = obj.getClient_email();
             row_reservation_list[i++] = obj.getClient_note();
             row_reservation_list[i++] = obj.getRoom() != null ? obj.getRoom().getRoom_type():" ";
-            row_reservation_list[i++] = obj.getCheck_in();
-            row_reservation_list[i++] = obj.getCheck_out();
-            row_reservation_list[i++] = obj.getAdult_numb();
-            row_reservation_list[i++] = obj.getChild_numb();
             row_reservation_list[i++] = obj.getTotal_price();
             row_reservation_list[i++] = obj.getHotel() != null ? obj.getHotel().getHotel_name():" ";
             mdl_reservation_list.addRow(row_reservation_list);
@@ -352,10 +426,6 @@ public class EmployeeGUI extends JFrame {
             row_reservation_list[i++] = obj.getClient_email();
             row_reservation_list[i++] = obj.getClient_note();
             row_reservation_list[i++] = Room.roomName(obj.getRoom_id());
-            row_reservation_list[i++] = obj.getCheck_in();
-            row_reservation_list[i++] = obj.getCheck_out();
-            row_reservation_list[i++] = obj.getAdult_numb();
-            row_reservation_list[i++] = obj.getChild_numb();
             row_reservation_list[i++] = obj.getTotal_price();
             row_reservation_list[i++] = Hotel.hotelName(obj.getHotel_id());
             mdl_reservation_list.addRow(row_reservation_list);
@@ -364,7 +434,7 @@ public class EmployeeGUI extends JFrame {
 
     //Ekranda otellerin hangi özelliklerini yazmak istedigimiz kısım
     public void loadHotelTable(ArrayList<Hotel> hotelList) {
-        Object[] hotel_column = {"ID", "Otel İsmi","Şehir","Yıldız","Telefon","Mail"};
+        Object[] hotel_column = {"ID", "Otel İsmi","Şehir","Yıldız","Bölge","Telefon","Mail"};
         ArrayList<Object[]> hotelArrayList =
                 this.hotel.getForTableSearch(hotel_column.length, hotelList);
         this.createTable(this.mdl_hotel_list, tbl_hotel_list,
@@ -400,11 +470,11 @@ public class EmployeeGUI extends JFrame {
             row_room_list[i++] = obj.getId();
             row_room_list[i++] = obj.getRoom_type();
             row_room_list[i++] = obj.getStock();
-            row_room_list[i++] = obj.getSeason_id();
+            row_room_list[i++] = HotelSeason.seasonName(obj.getSeason_id());
             row_room_list[i++] = obj.getAdult_price();
             row_room_list[i++] = obj.getChild_price();
-            row_room_list[i++] = obj.getType_hotel_id();
-            row_room_list[i++] = obj.getHotel_id();
+            row_room_list[i++] = HotelType.hostelName(obj.getType_hotel_id());
+            row_room_list[i++] = Hotel.hotelName(obj.getHotel_id());
 
             mdl_room_list.addRow(row_room_list);
         }
@@ -458,6 +528,7 @@ public class EmployeeGUI extends JFrame {
             row_hotel_list[i++] = obj.getHotel_id();
             row_hotel_list[i++] = obj.getHotel_name();
             row_hotel_list[i++] = obj.getHotel_city();
+            row_hotel_list[i++] = obj.getHotel_region();
             row_hotel_list[i++] = obj.getHotel_stars();
             row_hotel_list[i++] = obj.getHotel_tel();
             row_hotel_list[i++] = obj.getHotel_mail();
@@ -467,7 +538,59 @@ public class EmployeeGUI extends JFrame {
         }
 
     }
+public static int getSelacted_hotelId(){
+        return selected_hotelId;
+}
+    public int getRoom_hotel_id_add() {
+        return room_hotel_id_add;
+    }
+    public void setRoom_hotel_id_add(int room_hotel_id_add) {
+        this.room_hotel_id_add = room_hotel_id_add;
+    }
+    public static int getSelected_hotelId() {
+        return selected_hotelId;
+    }
+    public static void setSelected_hotelId(int selected_hotelId) {
+        EmployeeGUI.selected_hotelId = selected_hotelId;
+    }
+    public static int getSelected_roomId() {
+        return selected_roomId;
+    }
+    public static void setSelected_roomId(int selected_roomId) {
+        EmployeeGUI.selected_roomId = selected_roomId;
+    }
 
+    public static String getSelectedSeasonName() {
+        return selectedSeasonName;
+    }
 
+    public static void setSelectedSeasonName(String selectedSeasonName) {
+        EmployeeGUI.selectedSeasonName = selectedSeasonName;
+    }
+
+    public static int getSelectedAdultPrice() {
+        return selectedAdultPrice;
+    }
+
+    public static void setSelectedAdultPrice(int selectedAdultPrice) {
+        EmployeeGUI.selectedAdultPrice = selectedAdultPrice;
+    }
+
+    public static int getSelectedChildPrice() {
+        return selectedChildPrice;
+    }
+
+    public static void setSelectedChildPrice(int selectedChildPrice) {
+        EmployeeGUI.selectedChildPrice = selectedChildPrice;
+
+    }
+
+    public static String getSelectedHostelType() {
+        return selectedHostelType;
+    }
+
+    public static void setSelectedHostelType(String selectedHostelType) {
+        EmployeeGUI.selectedHostelType = selectedHostelType;
+    }
 
 }

@@ -123,6 +123,7 @@
                     </constraints>
                     <properties>
                       <model>
+                        <item value=""/>
                         <item value="Employee"/>
                         <item value="admin"/>
                       </model>
@@ -218,6 +219,7 @@
                     </constraints>
                     <properties>
                       <model>
+                        <item value=""/>
                         <item value="Employee"/>
                         <item value="admin"/>
                       </model>

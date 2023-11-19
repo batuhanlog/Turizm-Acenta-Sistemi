@@ -13,52 +13,33 @@
       <change afterPath="$PROJECT_DIR$/../../Pratikler/Pratikler.iml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../Pratikler/src/Day.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../Pratikler/src/Gun.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/mysql_connector_j_8_1_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TurizmAcenta.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/helper/Config.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/helper/DBConnector.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/helper/Helper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/helper/Item.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/model/Admin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/model/Employee.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/model/Hotel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/model/HotelSeason.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/model/HotelType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/model/Reservation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/model/Room.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/model/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/mysql-connector-j-8.1.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/view/AdminGUI.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/view/AdminGUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/view/EmployeeGUI.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/view/EmployeeGUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/view/LoginGUI.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/view/LoginGUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/view/ReservationGUI.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/view/ReservationGUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/LoginGUI.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Oda Yönetim Sistemi.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/OdaRezervasyonu.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/RezervasyonListeleme.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/TurizmAcentasıLogus.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/UserAdd.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hotel.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hotel.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/img.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/man.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/otelyonetim.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/model/Roomfeatures.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/view/AddBoardSeasonGUI.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/view/AddBoardSeasonGUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/view/AddRoomFeaturesGUI.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/view/AddRoomFeaturesGUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/view/HotelDetailsGUI.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/view/HotelDetailsGUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/view/RoomaddGUI.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AcentaSistemi/view/RoomaddGUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Hafta-5" beforeDir="false" afterPath="$PROJECT_DIR$/../../Hafta-5" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../IntelliJ IDEA" beforeDir="false" afterPath="$PROJECT_DIR$/../../IntelliJ IDEA" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../KelimeyiBulma" beforeDir="false" afterPath="$PROJECT_DIR$/../../KelimeyiBulma" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Patika" beforeDir="false" afterPath="$PROJECT_DIR$/../../Patika" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AcentaSistemi/helper/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AcentaSistemi/helper/Helper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AcentaSistemi/model/Hotel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AcentaSistemi/model/Hotel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AcentaSistemi/model/HotelSeason.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AcentaSistemi/model/HotelSeason.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AcentaSistemi/model/HotelType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AcentaSistemi/model/HotelType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AcentaSistemi/model/Reservation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AcentaSistemi/model/Reservation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AcentaSistemi/model/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AcentaSistemi/model/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AcentaSistemi/view/AdminGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/AcentaSistemi/view/AdminGUI.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AcentaSistemi/view/EmployeeGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/AcentaSistemi/view/EmployeeGUI.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AcentaSistemi/view/EmployeeGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AcentaSistemi/view/EmployeeGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AcentaSistemi/view/LoginGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AcentaSistemi/view/LoginGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AcentaSistemi/view/ReservationGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/AcentaSistemi/view/ReservationGUI.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AcentaSistemi/view/ReservationGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AcentaSistemi/view/ReservationGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hotel.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/hotel.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,30 +70,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW&quot;: &quot;true&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;285&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/batuh/IdeaProjects/TourismAgencySystem-master&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/batuh/IdeaProjects/TurizmAcentaOdev/TurizmAcenta/src/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "false",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "336",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/batuh/OneDrive/Masaüstü",
+    "onboarding.tips.debug.path": "C:/Users/batuh/IdeaProjects/TurizmAcentaOdev/TurizmAcenta/src/Main.java",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\batuh\IdeaProjects\TurizmAcentaOdev\TurizmAcenta\src" />
       <recent name="C:\Users\batuh\IdeaProjects\TurizmAcentaOdev\TurizmAcenta\src\AcentaSistemi" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Application.LoginGUI">
     <configuration name="EmployeeGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="AcentaSistemi.view.EmployeeGUI" />
       <module name="TurizmAcenta" />
@@ -148,8 +130,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
         <item itemvalue="Application.LoginGUI" />
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.EmployeeGUI" />
       </list>
     </recent_temporary>
@@ -164,6 +146,17 @@
       <updated>1699187011054</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />

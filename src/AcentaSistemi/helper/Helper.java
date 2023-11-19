@@ -62,21 +62,21 @@ public class Helper {
         UIManager.put("OptionPane.noButtonText","Hayır");
 
     }
-    public static void setthema() {
+     public static void setTheme() {
 
-        for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-            if ("Nimbus".equals(info.getName())) {
-                try {
-                    UIManager.setLookAndFeel(info.getClassName());
+         for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+             if ("Nimbus".equals(info.getName())) {
+                 try {
+                     UIManager.setLookAndFeel(info.getClassName());
 
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
+                 } catch (Exception e) {
+                     System.out.println(e.getMessage());
 
-                }
-                break;
+                 }
+                 break;
 
-            }
-        }
-    }
+             }
+         }
+     }
 
 }

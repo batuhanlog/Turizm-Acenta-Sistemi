@@ -83,6 +83,7 @@ public class LoginGUI extends JFrame{
 
 
     public static void main(String[] args) {
+        Helper.setTheme();
         LoginGUI login = new LoginGUI();
     }
 }
